@@ -1,31 +1,50 @@
-
-
 declare
 
-fun {Incrementor L C}
-   case L of (Char#Count)|T then
-      if Char == C then Char#(Count+1)|T
-      else Char#Count|{Incrementor T C}
+fun {RandomChar}
+   local N Chars in
+      Chars = rec(a b c d e)
+      N=({OS.rand} mod 5) +1
+      Chars.N
+   end
+end
+declare 
+fun {Mine N}
+   {Delay 2000}
+   if N==0 then
+      nil
+   else
+      {RandomChar}|{Mine N-1}
+   end
+end
+
+fun {Count E L2}
+   case L2 of (Name#Times)|T then
+      if E==Name then Name#(Times+1)|T
+      else Name#Times|{Count E T}
       end
-   else
-      C#1|nil
+   else E#1|nil
    end
 end
 
-
-fun {Counter L Acc}
-   case L of Xs|Ys then
-      {Counter Ys {Incrementor Acc Xs}}
-   else
-      Acc
+fun {Counter L}
+   fun {CounterAcc L L2}
+      case L of H|T then
+	 local E in E={Count H L2}
+	    E|{CounterAcc T E}
+	 end
+      else
+	 nil
+      end
    end
+in
+   {CounterAcc L nil}
 end
 
-
-%{Browse {Counter ['r' 'c' 'b'] nil}}
-%{Browse {Incrementor nil 'b'}}
-
-%Exo 3
+/*local X Y in
+   thread X={Mine 1000} end
+   thread Y = {Counter X} end
+   {Browse Y}
+end*/
 
 proc {PassingTheToken Id Tin Tout}
    case Tin of H|T then X in
@@ -36,33 +55,11 @@ proc {PassingTheToken Id Tin Tout}
    end
 end
 
-
 local X Y Z in
-   thread {PassingTheToken 1 foo|Z s} end
+   thread {PassingTheToken 1 foo|Z X} end
    thread {PassingTheToken 2 X Y} end
    thread {PassingTheToken 3 Y Z} end
 end
 
-%Exo 4
 
-fun {Bar N}
-   if N==0 then nil
-   else {Delay 500}'Beer'|{Bar N-1}
-   end
-end
-
-fun {Foo L}
-   case L of Xs|Ys then {Delay 1200} 'EmptyBeer'|{Foo Ys}
-   else 'Burp'|nil
-   end
-end
-
-local X Y in
-thread X={Bar 20} end
-thread Y={Foo X} end
-{Browse Y}
-end
-
-
-	 
-	 
+   
