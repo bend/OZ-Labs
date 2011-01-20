@@ -63,7 +63,7 @@ proc {SendC C Msg}
    %Msg|T = @C
    %C:=T
    %Exchange is better
-   {Exchange P Msg|T T}
+   {Exchange C Msg|T T}
 end
 
 %declare C in

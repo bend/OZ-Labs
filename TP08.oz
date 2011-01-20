@@ -60,6 +60,37 @@ fun {StreamMerger S1 S2}
    end
 end
 
+declare
+
+fun {StreamMergerWP S1 S2}
+   P S 
+   proc {Aux S1 S2}
+      if {WaitTwo S1 S2} == 1 then
+	 {Send P S1.1}
+	 {Aux S1.2 S2}
+      else
+	 {Send P S2.1}
+	 {Aux S1 S2.2}
+      end
+   end
+in
+   P={NewPort S}
+   {Aux S1 S2}
+   S
+end
+
+proc {ReadList L}
+   case L of H|T then
+      {Browse H}{ReadList T}
+   end
+end
+
+
+
+{Browse {StreamMergerWP 1|2|3|4|_ 1|2|3|4|_ }}
+
+
+
    
    
    

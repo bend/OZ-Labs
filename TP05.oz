@@ -111,9 +111,9 @@ end
 local G I in
    I =input(x)
    G=gate(value:'or' gate(value:'and'
-input(x)
-input(y)) gate(value:'not'
-input(z)))
+			  input(x)
+			  input(y)) gate(value:'not'
+					 input(z)))
 
 %{Browse {Simulate G input(x:1|0|1|0|_ y:0|1|0|1|_ z:1|1|0|0|_ )}} 
 end
@@ -132,12 +132,12 @@ fun {Foo2 Xs C}
 end
 
 proc {Increment C}
-   {NewLock C} C:=@C+1
+   C:=@C+1
 
 end
 
 proc {Decrement C}
-   {NewLock C} C:=@C-1
+   C:=@C-1
 end
 
 

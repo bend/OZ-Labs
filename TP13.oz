@@ -1,6 +1,6 @@
 declare
 % Exo 1
-% If there are concurrent access, the change can lead to a invalid value. We can fix this by adding locks between @P = ... and P:=...
+% If there are concurrent access, the change can lead to a invalid value. We can fix this by adding locks between @P = ... and P:=... or using the {Exchange C Old New } function
 
 % Exo 2
 
